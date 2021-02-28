@@ -40,13 +40,3 @@ class Stack {
 };
 
 
-int main() {
-    Stack<int> i;
-    i.push(1);
-    i.push(2);
-    i.push(3);
-    i.push(4);
-    i.clear();
-    std::cout << ( i.isEmpty() ? "true" : "false")<< std::endl;
-}
-

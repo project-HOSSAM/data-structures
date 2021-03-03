@@ -5,6 +5,10 @@ template<typename N>
 struct Node {
     N value;
     Node* next;
+    ~Node() {
+        delete this;
+        std::cout << "good bye" << std::endl;
+    }
 };
 
 template<typename T>
@@ -22,6 +26,10 @@ public:
         this->tail = NULL;
         this->length = 0;
     };
+
+    bool isEmpty() {
+        return this->head == NULL ? true : false;
+    }
 
     void append(T value) {
         if(this->head == NULL) {
@@ -47,6 +55,7 @@ public:
         newNode->value = value;
         newNode->next = this->head;
         this->head = newNode; 
+        this->length++;
     };
 
     T shift() {
@@ -95,6 +104,23 @@ public:
             };
         }
     };
+    void reverse() {
+        if (this->isEmpty()) return;
+        Node<T>* currentNode = this->head;
+        Node<T>* prevNode;
+        Node<T>* temp = this->head;
+        for(int i = this->length - 1; i > 0; i--) {
+            for(int j = 0; j < i; j++) {
+                prevNode = currentNode;
+                currentNode = currentNode->next;
+            };
+            currentNode->next = prevNode;
+            currentNode = this->head;
+            prevNode = NULL;
+        };
+        this->head = this->tail;
+        this->tail = temp;
+    };
 
     T operator[](int index) {
         Node<T>* currentNode = this->head;
@@ -107,11 +133,10 @@ public:
 
     void log() {
         Node<T>* currentNode = this->head;
-        while(currentNode != NULL) {
+        for(int i = 0; i < this->length; i++) {
             std::cout << currentNode->value << ' ';
             currentNode = currentNode->next;
-        };
-
+        }
         std::cout << std::endl;
-    }
+    };
 };

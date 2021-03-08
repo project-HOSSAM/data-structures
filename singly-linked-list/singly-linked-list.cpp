@@ -5,10 +5,6 @@ template<typename N>
 struct Node {
     N value;
     Node* next;
-    ~Node() {
-        delete this;
-        std::cout << "good bye" << std::endl;
-    }
 };
 
 template<typename T>
@@ -104,6 +100,19 @@ public:
             };
         }
     };
+
+    void clear() {
+        for(int i = this->length; i > 0; i--) {
+            Node<T>* currentNode = this->head;
+            for(int j = 0; j < i; j++) {
+                currentNode = currentNode->next;
+            };
+            delete currentNode;
+            this->length--;
+        };
+        delete this->head;
+    }
+
     void reverse() {
         if (this->isEmpty()) return;
         Node<T>* currentNode = this->head;

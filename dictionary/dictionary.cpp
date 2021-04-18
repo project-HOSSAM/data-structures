@@ -7,7 +7,7 @@ struct Item {
     Item* next;
 };
 
-class DictionaryUnsortedList {
+class Dictionary {
 private:
     std::array<Item*, 50> dict;
 

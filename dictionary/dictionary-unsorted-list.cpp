@@ -1,6 +1,5 @@
 #include <iostream>
 #include <array>
-#include <string>
 
 struct Item {
     std::string key;
@@ -8,7 +7,7 @@ struct Item {
     Item* next;
 };
 
-class Dictionary {
+class DictionaryUnsortedList {
 private:
     std::array<Item*, 50> dict;
 
@@ -51,34 +50,4 @@ public:
             return nullptr;
         }
    } 
-   void delete(std::string const& key) {
-        auto index = hash(key);
-   } 
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,4 +1,3 @@
-#include <cstddef>
 #include <iostream>
 
 struct Node {
@@ -127,18 +126,3 @@ public:
   }
 };
 
-int main() {
-  auto tree = new BinarySearchTree();
-  tree->insert(1);
-  tree->insert(2);
-  tree->insert(3);
-  tree->insert(4);
-  tree->insert(5);
-  auto n = tree->search(3);
-  std::cout << "the number is " << n->data << std::endl;
-  auto max = tree->findMaximum();
-  auto min = tree->findMinimum();
-  std::cout << "the max value is " << max->data << " and the min value is "
-            << min->data << std::endl;
-  tree->remove(3);  
-}

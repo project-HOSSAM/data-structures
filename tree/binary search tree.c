@@ -132,22 +132,3 @@ void postOrder(struct Node *root, void (*callback)(int)) {
   postOrder(root->right, callback);
   callback(root->data);
 }
-
-void cb(int v) { printf("the node have %d value\n", v); }
-
-int main() {
-  struct Node *node = createBinarySearchTree(50);
-  insertToBinarySearchTree(node, 30);
-  insertToBinarySearchTree(node, 70);
-  insertToBinarySearchTree(node, 20);
-  insertToBinarySearchTree(node, 40);
-  insertToBinarySearchTree(node, 60);
-  insertToBinarySearchTree(node, 80);
-  insertToBinarySearchTree(node, 25);
-  insertToBinarySearchTree(node, 65);
-  insertToBinarySearchTree(node, 75);
-  insertToBinarySearchTree(node, 77);
-  insertToBinarySearchTree(node, 85);
-  deleteFromBinarySearchTree(node, 70);
-  inOrder(node, cb);
-}

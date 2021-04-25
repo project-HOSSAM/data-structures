@@ -88,12 +88,18 @@ bool deleteFromBinarySearchTree(struct Node *root, int data) {
     parent->right = child;
     return true;
   };
-  // node has 3 children
+  // node has 2 children
   struct Node *replacmentNode = minNode(nodeToDelete->right);
-  replacmentNode->parent->left = NULL;
+  if (replacmentNode->parent->data > replacmentNode->data) {
+    replacmentNode->parent->left = NULL;
+  } else {
+    replacmentNode->parent->right = NULL;
+  }
   replacmentNode->parent = nodeToDelete->parent;
   nodeToDelete->left->parent = replacmentNode;
   nodeToDelete->right->parent = replacmentNode;
+  replacmentNode->left = nodeToDelete->left;
+  replacmentNode->right = nodeToDelete->right;
   if (nodeToDelete->data > nodeToDelete->parent->data) {
     nodeToDelete->parent->right = replacmentNode;
   } else {
@@ -103,6 +109,32 @@ bool deleteFromBinarySearchTree(struct Node *root, int data) {
   return true;
 }
 
+void preOrder(struct Node *root, void (*callback)(int)) {
+  if (root == NULL)
+    return;
+  callback(root->data);
+  preOrder(root->left, callback);
+  preOrder(root->right, callback);
+};
+
+void inOrder(struct Node *root, void (*callback)(int)) {
+  if (root == NULL)
+    return;
+  inOrder(root->left, callback);
+  callback(root->data);
+  inOrder(root->right, callback);
+}
+
+void postOrder(struct Node *root, void (*callback)(int)) {
+  if (root == NULL)
+    return;
+  postOrder(root->left, callback);
+  postOrder(root->right, callback);
+  callback(root->data);
+}
+
+void cb(int v) { printf("the node have %d value\n", v); }
+
 int main() {
   struct Node *node = createBinarySearchTree(50);
   insertToBinarySearchTree(node, 30);
@@ -111,16 +143,11 @@ int main() {
   insertToBinarySearchTree(node, 40);
   insertToBinarySearchTree(node, 60);
   insertToBinarySearchTree(node, 80);
-  insertToBinarySearchTree(node, 35);
+  insertToBinarySearchTree(node, 25);
   insertToBinarySearchTree(node, 65);
   insertToBinarySearchTree(node, 75);
   insertToBinarySearchTree(node, 77);
   insertToBinarySearchTree(node, 85);
-  bool r = deleteFromBinarySearchTree(node, 70);
-  if (r) {
-    printf("deletion went ok");
-    return 0;
-  }
-  printf("deletion went wrong\n");
-  printf("the new root is %d", node->data);
+  deleteFromBinarySearchTree(node, 70);
+  inOrder(node, cb);
 }

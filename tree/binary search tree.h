@@ -17,3 +17,7 @@ bool deleteFromBinarySearchTree(struct Node *root, int data);
 
 struct Node *maxNode(struct Node *root);
 struct Node *minNode(struct Node *root);
+
+void preOrder(struct Node *root, void (*callback)(int));
+void inOrder(struct Node *root, void (*callback)(int));
+void postOrder(struct Node *root, void (*callback)(int));

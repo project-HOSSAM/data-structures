@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <utility>
 #include <vector>
+#include <queue>
 #include <experimental/optional>
 
 typedef std::pair<std::string, int> Edge;
@@ -25,6 +26,7 @@ public:
   void addEdge(std::string, std::string, int);
   void removeEdge(std::string, std::string);
   void depthFirstSearch(const std::function<void(std::string)> &, std::experimental::optional<std::string>);
+  void breadthFirstSearch(const std::function<void(std::string)> &, std::experimental::optional<std::string>);
   void print() const;
 };
 
@@ -133,6 +135,35 @@ void Graph::depthFirstSearch(const std::function<void(std::string)> &callback, s
     if(indexOfVertex < 0) return;
     for(auto ve : this->graph[indexOfVertex].edges) {
         this->depthFirstSearch(callback, ve.first);
+    }
+}
+
+void Graph::breadthFirstSearch(const std::function<void(std::string)> &callback, std::experimental::optional<std::string> v) {
+    std::queue<std::string> queue;
+    std::unordered_map<std::string, bool> visited;
+    std::string vertex;
+    if(v == std::experimental::nullopt) {
+        vertex = this->graph[0].vertex; 
+    } else {
+        vertex = v.value();
+    }
+    while(!queue.empty()) {
+        std::string v = queue.front();
+        queue.pop();
+        callback(v);
+        int indexOfVertex = -1;
+        for(int i = 0; i < this->graph.size(); i++) {
+            if(this->graph[i].vertex == vertex) {
+                indexOfVertex = i;
+                break;
+            }
+        }
+        for(auto edge : this->graph[indexOfVertex].edges) {
+            if(!visited[edge.first]) {
+                visited[edge.first] = true;
+                queue.push(edge.first);
+            }
+        }
     }
 }
 
